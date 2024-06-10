@@ -3,6 +3,7 @@ These functions match what the spec of hnswlib is.
 """
 import numpy as np
 from numpy.typing import ArrayLike
+from tslearn import metrics
 
 
 def l2(x: ArrayLike, y: ArrayLike) -> float:
