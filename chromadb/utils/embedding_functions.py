@@ -76,16 +76,15 @@ class MFCCEmbeddingFunction(EmbeddingFunction[Documents]):
     def __call__(self, input: Documents) -> Embeddings:
         embeddings = []
         for audio_file_path in input:
-            audio_data = librosa.load(audio_file_path)
-            sample_rate = librosa.get_samplerate(audio_file_path)
-            target_length = self.get_length(audio_data)
+            audio_data, sample_rate = librosa.load(audio_file_path)
+            target_length = int(self.get_length(audio_data))
 
             mfcc = librosa.feature.mfcc(y=audio_data[:target_length],
                                         sr=sample_rate,
                                         n_mfcc=self.n_mfcc,
                                         n_fft=self.n_fft,
                                         hop_length=self.hop_length)
-            embeddings.append(mfcc)
+            embeddings.append(mfcc.tolist())
             
         return embeddings
 
