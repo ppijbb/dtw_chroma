@@ -62,15 +62,15 @@ class MFCCEmbeddingFunction(EmbeddingFunction[Documents]):
         self,
         model_name: str = "librosa-mfcc",
         length_function: Callable = lambda x: math.pow(2, math.floor(math.log2(len(x)))),
-        n_mfcc: int = 20,
-        n_fft: int = 400,
-        hop_length: int = 160
+         n_mel_filter: int = 20,
+        low_freq: int = 200,
+        high_freq: int = 6400
     ):
         self._method = model_name
         self.get_length = length_function
-        self.n_mfcc = n_mfcc
-        self.n_fft = n_fft
-        self.hop_length = hop_length
+        self.n_filter = n_mel_filter
+        self.low_freq = low_freq
+        self.high_freq = high_freq
         
 
     def __call__(self, input: Documents) -> Embeddings:
@@ -81,9 +81,11 @@ class MFCCEmbeddingFunction(EmbeddingFunction[Documents]):
 
             mfcc = librosa.feature.mfcc(y=audio_data[:target_length],
                                         sr=sample_rate,
-                                        n_mfcc=self.n_mfcc,
-                                        n_fft=self.n_fft,
-                                        hop_length=self.hop_length)
+                                        n_mfcc=1,
+                                        lifter=self.n_filter,
+                                        fmin=self.low_freq,
+                                        fmax=self.high_freq).squeeze()
+            # print(mfcc.shape, mfcc.dtype)
             embeddings.append(mfcc.tolist())
             
         return embeddings
