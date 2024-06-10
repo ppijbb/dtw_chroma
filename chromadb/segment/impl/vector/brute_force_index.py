@@ -36,6 +36,8 @@ class BruteForceIndex:
             self.distance_fn = distance_functions.ip
         elif space == "cosine":
             self.distance_fn = distance_functions.cosine
+        elif space == "dtw":
+            self.distance_fn = distance_functions.dtw
         else:
             raise Exception(f"Unknown distance function: {space}")
 

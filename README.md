@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <b>Chroma - the open-source embedding database</b>. <br />
+    <b>DTW-Chroma - the open-source embedding database</b>. <br />
     The fastest way to build Python or JavaScript LLM apps with memory!
 </p>
 

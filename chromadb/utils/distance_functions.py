@@ -21,3 +21,10 @@ def cosine(x: ArrayLike, y: ArrayLike) -> float:
 
 def ip(x: ArrayLike, y: ArrayLike) -> float:
     return 1 - np.dot(x, y)
+
+
+# DTW function
+def dtw(x: ArrayLike, y: ArrayLike) -> float:
+    path, cost = metrics.dtw_path(s1=x,
+                                  s2=y)
+    return cost
