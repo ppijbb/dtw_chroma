@@ -71,7 +71,10 @@ class MFCCEmbeddingFunction(EmbeddingFunction[Documents]):
         self.n_filter = n_mel_filter
         self.low_freq = low_freq
         self.high_freq = high_freq
-        
+
+    def fft_mag(self, fft_bins):
+        ret = [np.sqrt(c.real**2 + c.imag**2) for c in fft_bins]
+        return ret[:len(ret) // 2]        
 
     def __call__(self, input: Documents) -> Embeddings:
         embeddings = []
@@ -81,7 +84,8 @@ class MFCCEmbeddingFunction(EmbeddingFunction[Documents]):
 
             mfcc = librosa.feature.mfcc(y=audio_data[:target_length],
                                         sr=sample_rate,
-                                        n_mfcc=1,
+                                        n_mfcc=12,
+                                        
                                         lifter=self.n_filter,
                                         fmin=self.low_freq,
                                         fmax=self.high_freq).squeeze()
