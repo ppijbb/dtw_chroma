@@ -61,14 +61,14 @@ class MFCCEmbeddingFunction(EmbeddingFunction[Documents]):
     def __init__(
         self,
         model_name: str = "librosa-mfcc",
-        length_function: Callable = lambda x: 2**math.floor(math.log2(len(x))),
+        audio_length_function: Callable = lambda x: 2**math.floor(math.log2(len(x))),
         n_mel_filter: int = 20,
         n_mfcc: int = 12,
         low_freq: int = 200,
         high_freq: int = 6400
     ):
         self._method = model_name
-        self.get_length = length_function
+        self.get_length = audio_length_function
         self.n_filter = n_mel_filter
         self.n_mfcc = n_mfcc
         self.low_freq = low_freq
